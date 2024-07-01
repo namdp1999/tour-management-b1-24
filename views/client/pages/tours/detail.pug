@@ -7,9 +7,13 @@ block main
       .row
         .col-6
           .inner-images
-            each image in tourDetail.images
-              .inner-image
-                img(src=image)
+            div(class="swiper sliderMain")
+              div(class="swiper-wrapper")
+                each image in tourDetail.images
+                  div(class="swiper-slide")
+                    .inner-image
+                      img(src=image)
+              div(class="swiper-pagination")
         
         .col-6
           .inner-title #{tourDetail.title}
