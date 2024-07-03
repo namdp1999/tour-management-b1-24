@@ -1,5 +1,6 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../config/database";
+import slugify from "slugify";
 
 const Tour = sequelize.define("Tour", {
   id: {
@@ -44,7 +45,7 @@ const Tour = sequelize.define("Tour", {
   },
   slug: {
     type: DataTypes.STRING(255),
-    allowNull: false,
+    allowNull: true,
   },
   deleted: {
     type: DataTypes.BOOLEAN,
@@ -56,6 +57,13 @@ const Tour = sequelize.define("Tour", {
 }, {
   tableName: 'tours',
   timestamps: true, // Tự động quản lý createdAt và updatedAt
+});
+
+Tour.beforeCreate((tour) => {
+  tour["slug"] = slugify(`${tour["title"]}-${Date.now()}`, {
+    lower: true,
+    strict: true
+  });
 });
 
 export default Tour;
